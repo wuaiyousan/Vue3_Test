@@ -1,6 +1,10 @@
 <template>
   <h1>你好呀！熊海鹰</h1>
-  <Demo></Demo>
+  <Demo @testClick="testClick" msg="凤飞千仞" school="吉大">
+    <template v-slot:xhy>
+      <span>??????</span>
+    </template>  
+  </Demo>
 </template>
 
 <script>
@@ -8,6 +12,15 @@
   export default {
     name: 'App',
     components:{Demo},
+    setup(props) {
+      function testClick(value){
+        console.log('有人触发了testClick',value);
+      }
+
+      return {
+        testClick
+      }
+    }
   }
 </script>
 

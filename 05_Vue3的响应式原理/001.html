@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    let person = {
+      name: '熊海鹰',
+      age: 29
+    }
+
+    let room = ['101', '102', '103']
+
+    // 模拟Vue2中的响应式
+    /* let p = {}
+    Object.defineProperty(p, 'name', {
+      configurable: true,
+      get(){
+        return person.name
+      },
+      set(value){
+        console.log('数据劫持到person.name');
+        person.name = value
+      }
+    }) */
+
+     // 模拟Vue3中的响应式
+     const p = new Proxy(person,{
+      // 读取 p的属性时调用
+      get(terget,propName,proxyObj){
+        // console.log('xhy1',terget);
+        // console.log('xhy2',propName);
+        // console.log('xhy3',proxyObj);
+        // return terget[propName]
+        return Reflect.get(terget,propName)
+      },
+      // 增加或修改 p的属性时调用
+      set(terget,propName,value,proxyObj){
+        // console.log('xhy1',terget);
+        // console.log('xhy2',propName);
+        // console.log('xhy3',value);
+        // console.log('xhy4',proxyObj);
+        // terget[propName] = value
+        Reflect.set(terget,propName,value)
+      },
+      // 删除 p的属性时调用
+      deleteProperty(terget,propName){
+        // console.log('xhy1',terget);
+        // console.log('xhy2',propName);
+        // return delete terget[propName]
+        return Reflect.deleteProperty(terget,propName)
+      }
+    }) 
+
+    let obj = {a:1,b:2}
+
+    // Object.defineProperty 去操作
+    /* try {
+      Object.defineProperty(obj,'c',{
+        get(){
+          return 3
+        }
+      })
+
+      Object.defineProperty(obj,'c',{
+        get(){
+          return 4
+        }
+      })
+    } catch (err){
+      console.log(err);
+    }
+    console.log('@@@'); */
+
+    // Reflect.defineProperty 去操作
+   /* const tep1 = Reflect.defineProperty(obj,'c',{
+      get(){
+        return 3
+      }
+    })
+
+    const tep2 = Reflect.defineProperty(obj,'c',{
+      get(){
+        return 4
+      }
+    })
+    console.log(tep1,tep2,obj.c);
+    console.log('@@@'); */
+  </script>
+</body>
+</html>
