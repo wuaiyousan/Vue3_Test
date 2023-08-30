@@ -37,7 +37,7 @@
       let sum = ref(0)
       let msg = ref('无敌')
 
-      let person = ref({
+      let person = reactive({
         name: '熊海鹰',
         age: 29,
         job:{
@@ -47,19 +47,32 @@
         }
       })
 
-      watch(sum,(newValue, oldValue)=>{
-        console.log('sum变化了', newValue, oldValue);
-      })
+      // 监视：一个ref响应式数据
+      watch(sum,(newValue,oldValue)=>{
+        console.log('xhy003',newValue,oldValue);
+      },{immediate:true})
 
-      // person.value 表示ref定义的对象中的value（是ref借助Proxy定义的响应式数据），此时能监听到数据变化
-      watch(person.value,(newValue, oldValue)=>{
-        console.log('person变化了', newValue, oldValue);
-      })  
+      // 监视：多个ref响应式数据
+      // watch([sum, msg],(newValue,oldValue)=>{
+      //   console.log('xhy004',newValue,oldValue);
+      // })
 
-      // person 是ref定义的对象，开启深度监测也可以监听到。此时不需要去 .value 找到ref借助Proxy定义的对象
-      watch(person,(newValue, oldValue)=>{
-        console.log('person变化了', newValue, oldValue);
-      },{deep:true})
+      // 监视：一个reative定义的响应式数据，
+      // 注意：此处无法正确的获取到oldvalue，强制开启了深度监视（deep配置无效）
+      /* watch(person,(newValue, oldValue)=>{
+        console.log('xhy005', newValue, oldValue);
+      },{deep:false}) */
+
+      // 监视：一个reative定义的响应式数据中的某个数据
+      /* watch(()=>person.name,(newValue, oldValue)=>{
+        console.log('xhy005', newValue, oldValue);
+      }) */
+
+      // 监视：一个reative定义的响应式数据中的某几个数据
+      /* watch([()=>person.name, ()=>person.age],(newValue, oldValue)=>{
+        console.log('xhy005', newValue, oldValue);
+      })  */
+
 
       // 方法
       function addNumber(){
