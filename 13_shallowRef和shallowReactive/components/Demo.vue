@@ -6,18 +6,17 @@
   <button @click="age += 1">修改年龄</button>
   <button @click="job.one.salary++">修改数字</button>
   <hr>
-  <h2>当前的sum值是：{{sum}}</h2>
-  <button @click="sum++ ">点位sum加1</button>
+  <h2>当前的sum.a值是：{{sum.a}}</h2>
+  <button @click="sum.a++ ">点位sum.a加1</button>
 </template>
 
 <script>
-  import { ref,reactive,toRef,toRefs, readonly, shallowReactive, shallowReadonly } from "vue";
+  import { ref,reactive,toRef,toRefs,shallowReactive,shallowRef } from "vue";
   export default {
     name: 'Demo',
     setup(){
-      // 数据
-      let sum = ref(0) 
-      let person = reactive({
+      // 数据 
+      let person = shallowReactive({
         name: '熊海鹰',
         age: 29,
         job:{
@@ -27,10 +26,10 @@
         }
       })
 
-      // person = readonly(person)
-      person = shallowReadonly(person)
-
-      sum = readonly(sum)
+      let sum = shallowRef({
+        a:0
+      })
+      console.log(sum);
 
       // 返回一个对象（常用）
       return {
